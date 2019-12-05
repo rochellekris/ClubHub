@@ -75,7 +75,7 @@ class ClubCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(for club: Club) {
-        clubImageView.image = UIImage(named: club.imageName)
+        clubImageView.image = UIImage(named: "mensHockey")
     }
 
     required init?(coder: NSCoder) {

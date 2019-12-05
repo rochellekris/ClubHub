@@ -10,7 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
    
-    var clubTest: [Club] = []
+    var clubs = [Club]()
+    var users = [User]()
     
     var searchBar: UISearchBar!
     var filterButton: UIButton!
@@ -55,11 +56,11 @@ class ViewController: UIViewController {
         filterButton.isHidden = false
         view.addSubview(filterButton)
         
-        let club1 = Club(name: "Cornell Orchestra", description: "Symphony and Chamber Orchestras", imageName: "cornellOrchestra", tags: ["arts", "music"], level: "undergrad", appReq: true)
-        let club2 = Club(name: "Men's Ice Hockey", description: "Cornell v. Princeton Saturday Nov. 23 Lynah Rink @7:00", imageName: "mensHockey", tags: ["sports"], level: "", appReq: false)
+        let club1 = Club(id: 1, name: "test", description: "description", level: "Undergraduate", application_required: true, interested_users: users, category: "test", href: "test")
+        let club2 = Club(id: 2, name: "test2", description: "description2", level: "Graduate", application_required: false, interested_users: users, category: "test", href: "test")
         
-        clubTest = [club1, club2, club1, club2, club2, club1, club1, club1, club2, club1, club2, club2, club1, club1, club1, club2, club1, club2, club2, club1, club1, club1, club2, club1, club2, club2, club1, club1, club1, club2, club2, club1, club1, club1, club2, club1, club2, club2, club1, club1, club1, club2, club1, club2, club2, club1]
-        
+        clubs = [club1, club2, club1, club2, club2, club1, club1, club1, club2, club1, club2, club2, club1, club1, club1, club2, club1, club2, club2, club1, club1, club1, club2, club1, club2, club2, club1, club1]
+
         //MARK: CollectionView
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -104,6 +105,20 @@ class ViewController: UIViewController {
         ])
     }
     
+    func getClubs(parameters: [String: Any]) {
+        NetworkManager.getClubs(parameters: parameters) { clubs in
+            print(clubs)
+        }
+    }
+    
+    func register(name: String, email: String, password: String) {
+        NetworkManager.register(name: name, email: email, password: password)
+    }
+    
+    func login(email: String, password: String) {
+        NetworkManager.login(email: email, password: password)
+    }
+
     @objc func goHome() {
         dismiss(animated: true, completion: nil)
     }
@@ -119,13 +134,14 @@ class ViewController: UIViewController {
 
 extension ViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        clubTest.count
+        clubs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! ClubCollectionViewCell
-        cell.configure(for: clubTest[indexPath.row])
+        cell.configure(for: clubs[indexPath.row])
         return cell
+        
     }
     
     @objc func pushFilterViewController() {
