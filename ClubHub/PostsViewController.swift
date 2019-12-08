@@ -1,26 +1,20 @@
 //
-//  ViewController.swift
+//  PostsViewController.swift
 //  ClubHub
 //
-//  Created by Rochelle Kris on 11/19/19.
+//  Created by Rafael Chaves on 12/8/19.
 //  Copyright © 2019 Rochelle Kris. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
-    
-    var clubs = [Club]()
-    var users = [User]()
+class PostsViewController: UIViewController {
+    var posts = [Post]()
     
     var searchBar: UISearchBar!
     var filterButton: UIButton!
-  
-    var collectionView: UICollectionView!
     
-    var tabs: UITabBarController!
-    var mainFeedView: ViewController!
-    var profileView: ProfileViewController!
+    var collectionView: UICollectionView!
     
     let cellReuseIdentifier = "cellReuseIdentifier"
     let headerReuseIdentifier = "headerReuseIdentifier"
@@ -29,25 +23,22 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .white
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
         navigationController?.navigationBar.prefersLargeTitles = true
-        title = "Clubs"
+        title = "Posts"
         
         //MARK: Toolbar
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let homeButton = UIBarButtonItem(image: (UIImage(contentsOfFile: "homeImage")), style: .plain, target: self, action: #selector(goHome))
-        let postButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToPost))
-        let profileButton = UIBarButtonItem(image: (UIImage(contentsOfFile:"profileImage")), style: .plain, target: self, action: #selector(goToProfile))
-        toolbarItems = [homeButton, spacer, postButton, spacer, profileButton]
-
+        let homeButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goHome))
+        let calButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToCal))
+        let profileButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToProfile))
+        toolbarItems = [homeButton, spacer, calButton, spacer, profileButton]
         navigationController?.setToolbarHidden(false, animated: false)
         
-//        createTabBarController()
         
         searchBar = UISearchBar()
-        searchBar.text = "Search clubs"
+        searchBar.text = "Search posts"
         searchBar.autocorrectionType = .default
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.isHidden = false
@@ -64,13 +55,6 @@ class ViewController: UIViewController {
         filterButton.isHidden = false
         view.addSubview(filterButton)
         
-
-//        let club1 = Club(id: 1, name: "test", description: "description", level: "Undergraduate", application_required: true, category: "test", href: "test")
-//
-        
-        
-        clubs = []
-
         //MARK: CollectionView
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -85,9 +69,8 @@ class ViewController: UIViewController {
         collectionView.register(ClubCollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerReuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
-
+        
         setupConstraints()
- 
     }
     
     func setupConstraints() {
@@ -114,93 +97,50 @@ class ViewController: UIViewController {
     }
     
     func getClubs(parameters: [String: Any]) {
-        NetworkManager.getClubs(parameters: parameters) { clubs in
-            self.clubs = clubs
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
+
     }
-    
-//    if let searchText = searchBar.text, !searchText.isEmpty {
-//        let parameters: [String: Any] = [
-//            "search_query": searchText
-//        ]
-//        getClubs(parameters: parameters)
-//        let viewController = FilterViewController()
-//        navigationController?.pushViewController(viewController, animated: true)
-//    }
-    
     
     @objc func goHome() {
-       navigationController?.pushViewController(ViewController(), animated: true)
+        dismiss(animated: true, completion: nil)
     }
-
-
-    @objc func goToPost() {
-        //MARK: TODO post view controller
-//        navigationController?.pushViewController(PostViewController(), animated: true)
-        
+    
+    @objc func goToCal() {
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func goToProfile() {
-        navigationController?.pushViewController(ProfileViewController(), animated: true)
-
-    
-   
+        let viewController = ProfileViewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
-    
-//    func createTabBarController(){
-//
-//        tabs = UITabBarController()
-//
-//        mainFeedView = ViewController()
-//        mainFeedView.tabBarItem.image = UIImage(named: "homeImage")
-//
-//        profileView = ProfileViewController()
-//        profileView.tabBarItem.image = UIImage(named: "profileImage")
-//
-//        tabs.viewControllers = [mainFeedView, profileView]
-//
-//        view.addSubview(tabs.view)
-//
-//    }
 }
 
-extension ViewController: UICollectionViewDataSource {
+
+extension PostsViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        clubs.count
+        posts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! ClubCollectionViewCell
-        cell.configure(for: clubs[indexPath.row])
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! PostCollectionViewCell
+        cell.configure(for: posts[indexPath.row])
         return cell
-        
     }
     
     @objc func pushFilterViewController() {
-        if let searchText = searchBar.text, !searchText.isEmpty {
-            let parameters: [String: Any] = [
-                "search_query": searchText
-            ]
-            getClubs(parameters: parameters)
-            let viewController = FilterViewController()
-            navigationController?.pushViewController(viewController, animated: true)
-        }
     }
 }
 
-extension ViewController: UICollectionViewDelegateFlowLayout{
+extension PostsViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: (collectionView.frame.width)*0.4)
     }
 }
 
-extension ViewController: UISearchBarDelegate {
+extension PostsViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if (searchBar.text == "Search clubs") {
+        if (searchBar.text == "Search posts") {
             searchBar.text = ""
         }
     }
 }
+
