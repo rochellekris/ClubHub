@@ -39,11 +39,13 @@ class PostsViewController: UIViewController {
     }
     
     func setupToolBar() {
+        //MARK: Toolbar
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let homeButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goHome))
-        let calButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToCal))
-        let profileButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToProfile))
-        toolbarItems = [homeButton, spacer, calButton, spacer, profileButton]
+        let homeButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(goHome))
+        let postButton = UIBarButtonItem(title: "Post", style:.plain, target: self, action: #selector(goToPost))
+        let profileButton = UIBarButtonItem(title: "Profile", style: .plain, target: self, action: #selector(goToProfile))
+        toolbarItems = [homeButton, spacer, postButton, spacer, profileButton]
+
         navigationController?.setToolbarHidden(false, animated: false)
     }
     
@@ -106,16 +108,15 @@ class PostsViewController: UIViewController {
     }
     
     @objc func goHome() {
-        dismiss(animated: true, completion: nil)
+        navigationController?.pushViewController(ViewController(), animated: true)
     }
-    
-    @objc func goToCal() {
-        dismiss(animated: true, completion: nil)
+
+    @objc func goToPost() {
+        navigationController?.pushViewController(PostsViewController(), animated: true)
     }
     
     @objc func goToProfile() {
-        let viewController = ProfileViewController()
-        navigationController?.pushViewController(viewController, animated: true)
+        navigationController?.pushViewController(ProfileViewController(), animated: true)
     }
 }
 

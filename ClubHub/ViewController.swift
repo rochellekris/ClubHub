@@ -55,7 +55,6 @@ class ViewController: UIViewController {
         searchBar.delegate = self
         view.addSubview(searchBar)
         
-        
         filterButton = UIButton(type: UIButton.ButtonType.system)
         filterButton.translatesAutoresizingMaskIntoConstraints = false
         filterButton.setTitle("Filter", for: .normal)
@@ -65,13 +64,6 @@ class ViewController: UIViewController {
         filterButton.isHidden = false
         view.addSubview(filterButton)
         
-
-//        let club1 = Club(id: 1, name: "test", description: "description", level: "Undergraduate", application_required: true, category: "test", href: "test")
-//
-        
-        
-        clubs = []
-
         //MARK: CollectionView
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -134,21 +126,17 @@ class ViewController: UIViewController {
     
     
     @objc func goHome() {
-       navigationController?.pushViewController(ViewController(), animated: true)
+        if (navigationController?.topViewController != self) {
+            navigationController?.pushViewController(ViewController(), animated: true)
+        }
     }
 
-
     @objc func goToPost() {
-        //MARK: TODO post view controller
-//        navigationController?.pushViewController(PostViewController(), animated: true)
-        
+        navigationController?.pushViewController(PostsViewController(), animated: true)
     }
     
     @objc func goToProfile() {
         navigationController?.pushViewController(ProfileViewController(), animated: true)
-
-    
-   
     }
     
 //    func createTabBarController(){

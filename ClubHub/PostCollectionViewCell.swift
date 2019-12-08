@@ -22,8 +22,8 @@ class PostCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.backgroundColor = .white
-        addLabel(label: postTitle, fontSize: 20)
-        addLabel(label: authorLabel, fontSize: 10)
+        addLabel(label: postTitle, fontSize: 22)
+        addLabel(label: authorLabel, fontSize: 12)
         addTextView(text: postBody)
         addButton(button: interestedUsers)
         
@@ -39,12 +39,18 @@ class PostCollectionViewCell: UICollectionViewCell {
     }
     
     func addButton(button: UIButton!) {
-        button.setTitleColor(.red, for: .normal)
+        button.setTitleColor(.systemRed, for: .normal)
         button.addTarget(self, action: #selector(showUsers), for: .touchUpInside)
         contentView.addSubview(button)
     }
     
     func addTextView(text: UITextView) {
+        text.text = "Testasdasfasfasf"
+        text.textColor = .black
+        text.isEditable = false
+        text.isHidden = false
+        text.layer.borderColor = UIColor.systemGray.cgColor
+        text.layer.borderWidth = 1
         contentView.addSubview(text)
     }
     
@@ -65,6 +71,7 @@ class PostCollectionViewCell: UICollectionViewCell {
         postBody.snp.makeConstraints { make in
             make.top.equalTo(authorLabel.snp.bottom)
             make.leading.equalTo(authorLabel.snp.leading)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-padding)
         }
 
     }
@@ -77,7 +84,7 @@ class PostCollectionViewCell: UICollectionViewCell {
 //        NetworkManager.getUser(user_id: post.author_id) { author in
 //            self.authorLabel.text = author.name
 //        }
-        authorLabel.text = "placeholder"
+        authorLabel.text = "Posted by: author"
         postTitle.text = post.title
         postBody.text = post.body
         interestedUsers.setTitle("\(post.interested_users.count)", for: .normal)
