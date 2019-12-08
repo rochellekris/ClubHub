@@ -12,6 +12,8 @@
 		5018F215239C921D00599B44 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018F214239C921D00599B44 /* Strings.swift */; };
 		5018F217239C9DA700599B44 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018F216239C9DA700599B44 /* Test.swift */; };
 		5018F219239CA66700599B44 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018F218239CA66700599B44 /* Error.swift */; };
+		503EF723239DAE230011C3F4 /* PostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503EF721239DAE230011C3F4 /* PostsViewController.swift */; };
+		503EF724239DAE230011C3F4 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503EF722239DAE230011C3F4 /* PostCollectionViewCell.swift */; };
 		507D991A2398049300E1D542 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507D99192398049300E1D542 /* Post.swift */; };
 		507D991C23980D0100E1D542 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507D991B23980D0100E1D542 /* NetworkManager.swift */; };
 		50F0F936239898B900219D97 /* Club.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0F935239898B900219D97 /* Club.swift */; };
@@ -54,6 +56,8 @@
 		5018F214239C921D00599B44 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		5018F216239C9DA700599B44 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		5018F218239CA66700599B44 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		503EF721239DAE230011C3F4 /* PostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsViewController.swift; sourceTree = "<group>"; };
+		503EF722239DAE230011C3F4 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
 		507D99192398049300E1D542 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		507D991B23980D0100E1D542 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		50F0F935239898B900219D97 /* Club.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Club.swift; sourceTree = "<group>"; };
@@ -155,6 +159,8 @@
 		EFC08A1423847ACC003DF58D /* ClubHub */ = {
 			isa = PBXGroup;
 			children = (
+				503EF722239DAE230011C3F4 /* PostCollectionViewCell.swift */,
+				503EF721239DAE230011C3F4 /* PostsViewController.swift */,
 				507D99192398049300E1D542 /* Post.swift */,
 				50F0F935239898B900219D97 /* Club.swift */,
 				5018F218239CA66700599B44 /* Error.swift */,
@@ -437,10 +443,12 @@
 				EF51A2A323878FC200D995C2 /* ClubCollectionViewCell.swift in Sources */,
 				EFC08A1A23847ACC003DF58D /* ViewController.swift in Sources */,
 				FE9EF4BB239D7EFB005FE738 /* ProfileViewController.swift in Sources */,
+				503EF723239DAE230011C3F4 /* PostsViewController.swift in Sources */,
 				50F0F9382398A57A00219D97 /* User.swift in Sources */,
 				507D991A2398049300E1D542 /* Post.swift in Sources */,
 				5018F217239C9DA700599B44 /* Test.swift in Sources */,
 				EFC08A1623847ACC003DF58D /* AppDelegate.swift in Sources */,
+				503EF724239DAE230011C3F4 /* PostCollectionViewCell.swift in Sources */,
 				EF51A2A52388449400D995C2 /* FilterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

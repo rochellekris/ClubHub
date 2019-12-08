@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class PostsViewController: UIViewController {
     var posts = [Post]()
@@ -28,15 +29,25 @@ class PostsViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Posts"
         
-        //MARK: Toolbar
+        let post1 = Post(id: 1, title: "Test Post Title", body: "Test Post Description", author_id: 1, interested_users: [])
+        posts = [post1, post1, post1]
+        setupToolBar()
+        setupSearchBar()
+        setupFilterButton()
+        setupCollectionView()
+        setupConstraints()
+    }
+    
+    func setupToolBar() {
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let homeButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goHome))
         let calButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToCal))
         let profileButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToProfile))
         toolbarItems = [homeButton, spacer, calButton, spacer, profileButton]
         navigationController?.setToolbarHidden(false, animated: false)
-        
-        
+    }
+    
+    func setupSearchBar() {
         searchBar = UISearchBar()
         searchBar.text = "Search posts"
         searchBar.autocorrectionType = .default
@@ -44,60 +55,54 @@ class PostsViewController: UIViewController {
         searchBar.isHidden = false
         searchBar.delegate = self
         view.addSubview(searchBar)
-        
-        
+    }
+    
+    func setupFilterButton() {
         filterButton = UIButton(type: UIButton.ButtonType.system)
-        filterButton.translatesAutoresizingMaskIntoConstraints = false
         filterButton.setTitle("Filter", for: .normal)
         filterButton.tintColor = .black
         filterButton.sizeToFit()
         filterButton.addTarget(self, action: #selector(pushFilterViewController), for: .touchUpInside)
         filterButton.isHidden = false
         view.addSubview(filterButton)
-        
-        //MARK: CollectionView
+    }
+    
+    func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = (padding*2)
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
         view.addSubview(collectionView)
         
-        collectionView.register(ClubCollectionViewCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
-        collectionView.register(ClubCollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerReuseIdentifier)
+        collectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
+        collectionView.register(PostCollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerReuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-        setupConstraints()
     }
     
     func setupConstraints() {
-        NSLayoutConstraint.activate([
-            filterButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
-            filterButton.bottomAnchor.constraint(equalTo: searchBar.bottomAnchor),
-            filterButton.leadingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60),
-            filterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
-        ])
+        filterButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(padding)
+            make.bottom.equalTo(searchBar.snp.bottom)
+            make.leading.equalTo(view.snp.trailing).offset(-60)
+            make.trailing.equalTo(view.snp.trailing).offset(-padding)
+        }
         
-        NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
-            searchBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 75),
-            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            searchBar.trailingAnchor.constraint(equalTo: filterButton.leadingAnchor, constant: -padding)
-        ])
+        searchBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(padding)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.top).offset(75)
+            make.leading.equalTo(view.snp.leading).offset(padding)
+            make.trailing.equalTo(filterButton.snp.leading).offset(padding)
+        }
         
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: padding),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
-        ])
-    }
-    
-    func getClubs(parameters: [String: Any]) {
-
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom).offset(padding)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.leading.equalTo(view.snp.leading).offset(padding)
+            make.trailing.equalTo(view.snp.trailing).offset(-padding)
+        }
     }
     
     @objc func goHome() {
@@ -123,6 +128,9 @@ extension PostsViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! PostCollectionViewCell
         cell.configure(for: posts[indexPath.row])
+        cell.layer.borderColor = UIColor.lightGray.cgColor
+        cell.layer.borderWidth = 1
+        cell.layer.cornerRadius = 5
         return cell
     }
     

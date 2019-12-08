@@ -7,81 +7,77 @@
 //
 
 import UIKit
+import SnapKit
 
 class PostCollectionViewCell: UICollectionViewCell {
     
-    var postTitle: UILabel!
-    var postBody: UITextView!
-    var interestedUsers: UIButton!
-    var authorLabel: UILabel!
+    var postTitle: UILabel! = UILabel()
+    var postBody: UITextView! = UITextView()
+    var interestedUsers: UIButton! = UIButton()
+    var authorLabel: UILabel! = UILabel()
     
-    var clubImageView: UIImageView!
-    
-    
-    var photoImageView: UIImageView!
-    
-    var restaurantNameLabel: UILabel = UILabel()
-    var costLabel: UILabel = UILabel()
-    var informationLabel: UILabel = UILabel()
-    
+    let padding: CGFloat = 5
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         contentView.backgroundColor = .white
-        addLabel(label: restaurantNameLabel)
-        addLabel(label: costLabel)
-        addLabel(label: informationLabel)
-        
-        photoImageView = UIImageView()
-        photoImageView.translatesAutoresizingMaskIntoConstraints = false
-        photoImageView.contentMode = .scaleAspectFill
-        photoImageView.layer.masksToBounds = true
-        photoImageView.layer.cornerRadius = 5
-        contentView.addSubview(photoImageView)
+        addLabel(label: postTitle, fontSize: 20)
+        addLabel(label: authorLabel, fontSize: 10)
+        addTextView(text: postBody)
+        addButton(button: interestedUsers)
         
         setupConstraints()
     }
     
-    func addLabel(label: UILabel!) {
+    func addLabel(label: UILabel!, fontSize: CGFloat) {
+        label.font = label.font.withSize(fontSize)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         label.numberOfLines = 1
-        label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
+    }
+    
+    func addButton(button: UIButton!) {
+        button.setTitleColor(.red, for: .normal)
+        button.addTarget(self, action: #selector(showUsers), for: .touchUpInside)
+        contentView.addSubview(button)
+    }
+    
+    func addTextView(text: UITextView) {
+        contentView.addSubview(text)
     }
     
     func setupConstraints() {
         
-        NSLayoutConstraint.activate([
-            informationLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 3),
-            informationLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            informationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -3)
-        ])
-        
-        NSLayoutConstraint.activate([
-            restaurantNameLabel.bottomAnchor.constraint(equalTo: informationLabel.topAnchor),
-            restaurantNameLabel.leadingAnchor.constraint(equalTo: informationLabel.leadingAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            costLabel.topAnchor.constraint(equalTo: restaurantNameLabel.topAnchor),
-            costLabel.trailingAnchor.constraint(equalTo: informationLabel.trailingAnchor, constant: -3)
-        ])
-        
-        NSLayoutConstraint.activate([
-            photoImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
-            photoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            photoImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            photoImageView.bottomAnchor.constraint(equalTo: restaurantNameLabel.topAnchor, constant: -3)
-        ])
+        interestedUsers.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(padding)
+            make.leading.equalTo(contentView.snp.leading).offset(padding)
+        }
+        postTitle.snp.makeConstraints { make in
+            make.top.equalTo(interestedUsers.snp.top)
+            make.leading.equalTo(interestedUsers.snp.trailing).offset(padding)
+        }
+        authorLabel.snp.makeConstraints { make in
+            make.top.equalTo(postTitle.snp.bottom)
+            make.leading.equalTo(postTitle.snp.leading)
+        }
+        postBody.snp.makeConstraints { make in
+            make.top.equalTo(authorLabel.snp.bottom)
+            make.leading.equalTo(authorLabel.snp.leading)
+        }
+
+    }
+    
+    @objc func showUsers() {
         
     }
     
     func configure(for post: Post) {
-        NetworkManager.getUser(user_id: post.author_id) { author in
-            self.authorLabel.text = author.name
-        }
+//        NetworkManager.getUser(user_id: post.author_id) { author in
+//            self.authorLabel.text = author.name
+//        }
+        authorLabel.text = "placeholder"
         postTitle.text = post.title
         postBody.text = post.body
         interestedUsers.setTitle("\(post.interested_users.count)", for: .normal)
@@ -90,6 +86,4 @@ class PostCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
 }
