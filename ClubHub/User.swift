@@ -11,11 +11,17 @@ import UIKit
 
 struct User: Codable {
     var id: Int
-    var netid: String
-    var password: String
-//    var favorite_clubs: [Club]
-    var created_posts: [Post]
-    var liked_posts: [Post]
+    var name: String
+    var email: String
+    var favorite_clubs: [bareClub]
+    var created_posts: [barePost]
+    var liked_posts: [barePost]
+}
+
+struct bareUser: Codable {
+    var id: Int
+    var name: String
+    var email: String
 }
 
 struct SessionResponse: Codable {
@@ -26,4 +32,8 @@ struct SessionResponse: Codable {
 
 struct UserResponse: Codable {
     var data: User
+}
+
+struct bareUserResponse: Codable {
+    var data: bareUser
 }
