@@ -32,9 +32,9 @@ class ViewController: UIViewController {
         
         //MARK: Toolbar
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let homeButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goHome))
-        let calButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToCal))
-        let profileButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToProfile))
+        let homeButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(goHome))
+        let calButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(goToCal))
+        let profileButton = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(goToProfile))
         toolbarItems = [homeButton, spacer, calButton, spacer, profileButton]
         navigationController?.setToolbarHidden(false, animated: false)
         
@@ -44,6 +44,7 @@ class ViewController: UIViewController {
         searchBar.autocorrectionType = .default
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.isHidden = false
+        searchBar.delegate = self
         view.addSubview(searchBar)
         
         
@@ -56,9 +57,6 @@ class ViewController: UIViewController {
         filterButton.isHidden = false
         view.addSubview(filterButton)
         
-//        let club1 = Club(id: 1, name: "test", description: "description", level: "Undergraduate", application_required: true, category: "test", href: "test")
-//
-        clubs = []
         //MARK: CollectionView
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -75,7 +73,6 @@ class ViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
 
-        
         setupConstraints()
     }
     
@@ -116,15 +113,17 @@ class ViewController: UIViewController {
     }
     
     @objc func goToCal() {
-        dismiss(animated: true, completion: nil)
+        let viewController = PostsViewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func goToProfile() {
-        dismiss(animated: true, completion: nil)
+        let viewController = ProfileViewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
-extension ViewController: UICollectionViewDataSource{
+extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         clubs.count
     }
@@ -145,12 +144,19 @@ extension ViewController: UICollectionViewDataSource{
             let viewController = FilterViewController()
             navigationController?.pushViewController(viewController, animated: true)
         }
-//        Test.test()
     }
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: (collectionView.frame.width)*0.4)
+    }
+}
+
+extension ViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if (searchBar.text == "Search clubs") {
+            searchBar.text = ""
+        }
     }
 }
