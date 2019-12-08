@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2CF8B3F9AB0C75E3C6F3D9C9 /* Pods_ClubHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552E75E538248A9BECE71C98 /* Pods_ClubHub.framework */; };
 		3ED006C904CDAFFE82D70477 /* Pods_ClubHub_ClubHubUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A9A659D48040C4C5CCCE32A /* Pods_ClubHub_ClubHubUITests.framework */; };
+		5018F215239C921D00599B44 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018F214239C921D00599B44 /* Strings.swift */; };
+		5018F217239C9DA700599B44 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018F216239C9DA700599B44 /* Test.swift */; };
+		5018F219239CA66700599B44 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018F218239CA66700599B44 /* Error.swift */; };
 		507D991A2398049300E1D542 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507D99192398049300E1D542 /* Post.swift */; };
 		507D991C23980D0100E1D542 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507D991B23980D0100E1D542 /* NetworkManager.swift */; };
 		50F0F936239898B900219D97 /* Club.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0F935239898B900219D97 /* Club.swift */; };
@@ -47,6 +50,9 @@
 		2A9A659D48040C4C5CCCE32A /* Pods_ClubHub_ClubHubUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ClubHub_ClubHubUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AAE2DD40B44256EE5553D68 /* Pods-ClubHubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClubHubTests.release.xcconfig"; path = "Target Support Files/Pods-ClubHubTests/Pods-ClubHubTests.release.xcconfig"; sourceTree = "<group>"; };
 		43DEE9626E7135D937AD64DA /* Pods_ClubHubTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ClubHubTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5018F214239C921D00599B44 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		5018F216239C9DA700599B44 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		5018F218239CA66700599B44 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		507D99192398049300E1D542 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		507D991B23980D0100E1D542 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		50F0F935239898B900219D97 /* Club.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Club.swift; sourceTree = "<group>"; };
@@ -149,6 +155,7 @@
 			children = (
 				507D99192398049300E1D542 /* Post.swift */,
 				50F0F935239898B900219D97 /* Club.swift */,
+				5018F218239CA66700599B44 /* Error.swift */,
 				50F0F9372398A57A00219D97 /* User.swift */,
 				507D991B23980D0100E1D542 /* NetworkManager.swift */,
 				EFC08A1523847ACC003DF58D /* AppDelegate.swift */,
@@ -158,6 +165,8 @@
 				EFC08A2323847ADC003DF58D /* Info.plist */,
 				EF51A2A223878FC200D995C2 /* ClubCollectionViewCell.swift */,
 				EF51A2A42388449400D995C2 /* FilterViewController.swift */,
+				5018F214239C921D00599B44 /* Strings.swift */,
+				5018F216239C9DA700599B44 /* Test.swift */,
 			);
 			path = ClubHub;
 			sourceTree = "<group>";
@@ -419,11 +428,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				507D991C23980D0100E1D542 /* NetworkManager.swift in Sources */,
+				5018F215239C921D00599B44 /* Strings.swift in Sources */,
 				50F0F936239898B900219D97 /* Club.swift in Sources */,
+				5018F219239CA66700599B44 /* Error.swift in Sources */,
 				EF51A2A323878FC200D995C2 /* ClubCollectionViewCell.swift in Sources */,
 				EFC08A1A23847ACC003DF58D /* ViewController.swift in Sources */,
 				50F0F9382398A57A00219D97 /* User.swift in Sources */,
 				507D991A2398049300E1D542 /* Post.swift in Sources */,
+				5018F217239C9DA700599B44 /* Test.swift in Sources */,
 				EFC08A1623847ACC003DF58D /* AppDelegate.swift in Sources */,
 				EF51A2A52388449400D995C2 /* FilterViewController.swift in Sources */,
 			);

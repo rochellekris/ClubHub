@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-   
+    
     var clubs = [Club]()
     var users = [User]()
     
@@ -56,20 +56,18 @@ class ViewController: UIViewController {
         filterButton.isHidden = false
         view.addSubview(filterButton)
         
-        let club1 = Club(id: 1, name: "test", description: "description", level: "Undergraduate", application_required: true, interested_users: users, category: "test", href: "test")
-        let club2 = Club(id: 2, name: "test2", description: "description2", level: "Graduate", application_required: false, interested_users: users, category: "test", href: "test")
-        
-        clubs = [club1, club2, club1, club2, club2, club1, club1, club1, club2, club1, club2, club2, club1, club1, club1, club2, club1, club2, club2, club1, club1, club1, club2, club1, club2, club2, club1, club1]
-
+//        let club1 = Club(id: 1, name: "test", description: "description", level: "Undergraduate", application_required: true, category: "test", href: "test")
+//
+        clubs = []
         //MARK: CollectionView
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = (padding*2)
-
+        
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
-//        collectionView.layer.shadowRadius = 10
+        //        collectionView.layer.shadowRadius = 10
         view.addSubview(collectionView)
         
         collectionView.register(ClubCollectionViewCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
@@ -101,24 +99,18 @@ class ViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
-
         ])
     }
     
     func getClubs(parameters: [String: Any]) {
         NetworkManager.getClubs(parameters: parameters) { clubs in
-            print(clubs)
+            self.clubs = clubs
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
     }
     
-    func register(name: String, email: String, password: String) {
-        NetworkManager.register(name: name, email: email, password: password)
-    }
-    
-    func login(email: String, password: String) {
-        NetworkManager.login(email: email, password: password)
-    }
-
     @objc func goHome() {
         dismiss(animated: true, completion: nil)
     }
@@ -145,8 +137,15 @@ extension ViewController: UICollectionViewDataSource{
     }
     
     @objc func pushFilterViewController() {
-    let viewController = FilterViewController()
-        navigationController?.pushViewController(viewController, animated: true)
+        if let searchText = searchBar.text, !searchText.isEmpty {
+            let parameters: [String: Any] = [
+                "search_query": searchText
+            ]
+            getClubs(parameters: parameters)
+            let viewController = FilterViewController()
+            navigationController?.pushViewController(viewController, animated: true)
+        }
+//        Test.test()
     }
 }
 
