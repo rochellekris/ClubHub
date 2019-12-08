@@ -37,9 +37,10 @@ class ViewController: UIViewController {
         
         //MARK: Toolbar
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let homeButton = UIBarButtonItem(image: (UIImage(contentsOfFile: "homeImage")), style: .plain, target: self, action: #selector(goHome))
-        let postButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToPost))
-        let profileButton = UIBarButtonItem(image: (UIImage(contentsOfFile:"profileImage")), style: .plain, target: self, action: #selector(goToProfile))
+        let homeButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(goHome))
+//            UIBarButtonItem(image: (UIImage(contentsOfFile: "homeImage")), style: .plain, target: self, action: #selector(goHome))
+        let postButton = UIBarButtonItem(title: "Post", style:.plain, target: self, action: #selector(goToPost))
+        let profileButton = UIBarButtonItem(title: "Profile", style: .plain, target: self, action: #selector(goToProfile))
         toolbarItems = [homeButton, spacer, postButton, spacer, profileButton]
 
         navigationController?.setToolbarHidden(false, animated: false)
