@@ -8,6 +8,11 @@
 
 import UIKit
 
+let userDefaults = UserDefaults.standard
+
+let encoder = JSONEncoder()
+let decoder = JSONDecoder()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -19,6 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = UINavigationController(rootViewController: ViewController())
         window?.makeKeyAndVisible()
+        
+        userDefaults.register(defaults: [
+            Strings.session_token: "token",
+            Strings.update_token: "token"
+        ])
+        
         return true
     }
 
