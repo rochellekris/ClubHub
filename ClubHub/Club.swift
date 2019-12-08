@@ -48,6 +48,10 @@ struct Club: Codable {
     let href: String
 }
 
-struct ClubResponse: Codable {
+struct ClubsResponse: Codable {
     var data: [Club]
+}
+
+struct ClubResponse: Codable {
+    var data: Club
 }

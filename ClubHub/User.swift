@@ -18,8 +18,12 @@ struct User: Codable {
     var liked_posts: [Post]
 }
 
-struct UserResponse: Codable {
+struct SessionResponse: Codable {
     var session_token: String
     var session_expiration: String
     var update_token: String
+}
+
+struct UserResponse: Codable {
+    var data: User
 }

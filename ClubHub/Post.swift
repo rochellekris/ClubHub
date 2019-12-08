@@ -16,6 +16,10 @@ struct Post: Codable {
     var interested_users: [User]
 }
 
-struct PostResponse: Codable {
+struct PostsResponse: Codable {
     var data: [Post]
+}
+
+struct PostResponse: Codable {
+    var data: Post
 }
