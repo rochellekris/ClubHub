@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Strings.session_token: "token",
             Strings.update_token: "token"
         ])
-        
+
         return true
     }
 

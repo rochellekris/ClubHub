@@ -18,6 +18,10 @@ class ViewController: UIViewController {
   
     var collectionView: UICollectionView!
     
+    var tabs: UITabBarController!
+    var mainFeedView: ViewController!
+    var profileView: ProfileViewController!
+    
     let cellReuseIdentifier = "cellReuseIdentifier"
     let headerReuseIdentifier = "headerReuseIdentifier"
     let padding: CGFloat = 8
@@ -25,19 +29,23 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = .white
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Clubs"
         
         //MARK: Toolbar
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let homeButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goHome))
-        let calButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToCal))
-        let profileButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToProfile))
-        toolbarItems = [homeButton, spacer, calButton, spacer, profileButton]
+        
+        
+//        let spacer = UIBarButtonItem()
+        let homeButton = UIBarButtonItem(image: (UIImage(contentsOfFile: "homeImage")), style: .plain, target: self, action: #selector(goHome))
+        let postButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(goToPost))
+        let profileButton = UIBarButtonItem(image: (UIImage(contentsOfFile:"profileImage")), style: .plain, target: self, action: #selector(goToProfile))
+        toolbarItems = [homeButton, postButton,  profileButton]
         navigationController?.setToolbarHidden(false, animated: false)
         
+//        createTabBarController()
         
         searchBar = UISearchBar()
         searchBar.text = "Search clubs"
@@ -58,6 +66,8 @@ class ViewController: UIViewController {
         
 //        let club1 = Club(id: 1, name: "test", description: "description", level: "Undergraduate", application_required: true, category: "test", href: "test")
 //
+        
+        
         clubs = []
         //MARK: CollectionView
         let layout = UICollectionViewFlowLayout()
@@ -67,7 +77,6 @@ class ViewController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
-        //        collectionView.layer.shadowRadius = 10
         view.addSubview(collectionView)
         
         collectionView.register(ClubCollectionViewCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
@@ -77,6 +86,7 @@ class ViewController: UIViewController {
 
         
         setupConstraints()
+ 
     }
     
     func setupConstraints() {
@@ -111,17 +121,45 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc func goHome() {
-        dismiss(animated: true, completion: nil)
-    }
+//    if let searchText = searchBar.text, !searchText.isEmpty {
+//        let parameters: [String: Any] = [
+//            "search_query": searchText
+//        ]
+//        getClubs(parameters: parameters)
+//        let viewController = FilterViewController()
+//        navigationController?.pushViewController(viewController, animated: true)
+//    }
     
-    @objc func goToCal() {
-        dismiss(animated: true, completion: nil)
+    
+    @objc func goHome() {
+       navigationController?.pushViewController(ViewController(), animated: true)
+    }
+
+    @objc func goToPost() {
+        //MARK: TODO post view controller
+//        navigationController?.pushViewController(PostViewController(), animated: true)
+        
     }
     
     @objc func goToProfile() {
-        dismiss(animated: true, completion: nil)
+        navigationController?.pushViewController(ProfileViewController(), animated: true)
     }
+    
+//    func createTabBarController(){
+//
+//        tabs = UITabBarController()
+//
+//        mainFeedView = ViewController()
+//        mainFeedView.tabBarItem.image = UIImage(named: "homeImage")
+//
+//        profileView = ProfileViewController()
+//        profileView.tabBarItem.image = UIImage(named: "profileImage")
+//
+//        tabs.viewControllers = [mainFeedView, profileView]
+//
+//        view.addSubview(tabs.view)
+//
+//    }
 }
 
 extension ViewController: UICollectionViewDataSource{

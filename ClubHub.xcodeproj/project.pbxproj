@@ -25,6 +25,7 @@
 		EFC08A2223847ADC003DF58D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFC08A2023847ADC003DF58D /* LaunchScreen.storyboard */; };
 		EFC08A2D23847ADC003DF58D /* ClubHubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC08A2C23847ADC003DF58D /* ClubHubTests.swift */; };
 		EFC08A3823847ADC003DF58D /* ClubHubUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC08A3723847ADC003DF58D /* ClubHubUITests.swift */; };
+		FE9EF4BB239D7EFB005FE738 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9EF4BA239D7EFB005FE738 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		EFC08A3323847ADC003DF58D /* ClubHubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClubHubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFC08A3723847ADC003DF58D /* ClubHubUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubHubUITests.swift; sourceTree = "<group>"; };
 		EFC08A3923847ADC003DF58D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FE9EF4BA239D7EFB005FE738 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 				EF51A2A42388449400D995C2 /* FilterViewController.swift */,
 				5018F214239C921D00599B44 /* Strings.swift */,
 				5018F216239C9DA700599B44 /* Test.swift */,
+				FE9EF4BA239D7EFB005FE738 /* ProfileViewController.swift */,
 			);
 			path = ClubHub;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				5018F219239CA66700599B44 /* Error.swift in Sources */,
 				EF51A2A323878FC200D995C2 /* ClubCollectionViewCell.swift in Sources */,
 				EFC08A1A23847ACC003DF58D /* ViewController.swift in Sources */,
+				FE9EF4BB239D7EFB005FE738 /* ProfileViewController.swift in Sources */,
 				50F0F9382398A57A00219D97 /* User.swift in Sources */,
 				507D991A2398049300E1D542 /* Post.swift in Sources */,
 				5018F217239C9DA700599B44 /* Test.swift in Sources */,
