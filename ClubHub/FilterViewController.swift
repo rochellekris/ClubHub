@@ -12,8 +12,8 @@ class FilterViewController: UIViewController {
     
     var backButton: UIBarButtonItem!
     
-    var sportsClubNC: UIButton!
-    var sportsClubC: UIButton!
+    var religious: UIButton!
+    var honorary: UIButton!
     
     var music: UIButton!
     var studentgov: UIButton!
@@ -25,12 +25,16 @@ class FilterViewController: UIViewController {
     var cultural: UIButton!
     var recreational: UIButton!
     
-    var pressedFilters: [UIButton]! = []
+    var pressedFilters: [UIButton]!
     
     
     weak var delegate: ChangeFilterDelegate?
     
-    init() {
+    init(pressedFilters: [UIButton]) {
+        self.pressedFilters = pressedFilters
+        for button in pressedFilters {
+            button.backgroundColor = .red
+        }
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -45,27 +49,27 @@ class FilterViewController: UIViewController {
         backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissViewController))
         navigationItem.leftBarButtonItem = backButton
         
-        sportsClubNC = UIButton()
-        sportsClubNC.backgroundColor = .white
-        sportsClubNC.setTitle("Sport Club - Non-competitive", for: .normal)
-        sportsClubNC.setTitleColor(.black, for: .normal)
-        sportsClubNC.layer.borderColor = UIColor.black.cgColor
-        sportsClubNC.layer.borderWidth = 1
-        sportsClubNC.translatesAutoresizingMaskIntoConstraints = false
-        sportsClubNC.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-        sportsClubNC.addTarget(self, action: #selector(applyUGradFilter), for: .touchUpInside)
-        view.addSubview(sportsClubNC)
+        religious = UIButton()
+        religious.backgroundColor = .white
+        religious.setTitle("Religious", for: .normal)
+        religious.setTitleColor(.black, for: .normal)
+        religious.layer.borderColor = UIColor.black.cgColor
+        religious.layer.borderWidth = 1
+        religious.translatesAutoresizingMaskIntoConstraints = false
+        religious.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+        religious.addTarget(self, action: #selector(applyUGradFilter), for: .touchUpInside)
+        view.addSubview(religious)
         
-        sportsClubC = UIButton()
-        sportsClubC.backgroundColor = .white
-        sportsClubC.setTitle("Sport Club - Competitive", for: .normal)
-        sportsClubC.setTitleColor(.black, for: .normal)
-        sportsClubC.layer.borderColor = UIColor.black.cgColor
-        sportsClubC.layer.borderWidth = 1
-        sportsClubC.translatesAutoresizingMaskIntoConstraints = false
-        sportsClubC.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-        sportsClubC.addTarget(self, action: #selector(applyGradFilter), for: .touchUpInside)
-        view.addSubview(sportsClubC)
+        honorary = UIButton()
+        honorary.backgroundColor = .white
+        honorary.setTitle("Honorary", for: .normal)
+        honorary.setTitleColor(.black, for: .normal)
+        honorary.layer.borderColor = UIColor.black.cgColor
+        honorary.layer.borderWidth = 1
+        honorary.translatesAutoresizingMaskIntoConstraints = false
+        honorary.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+        honorary.addTarget(self, action: #selector(applyGradFilter), for: .touchUpInside)
+        view.addSubview(honorary)
         
         music = UIButton()
         music.backgroundColor = .white
@@ -166,6 +170,10 @@ class FilterViewController: UIViewController {
         recreational.addTarget(self, action: #selector(applyRecreationalFilter), for: .touchUpInside)
         view.addSubview(recreational)
         
+        for button in pressedFilters {
+            button.backgroundColor = .red
+        }
+        
         setupConstraints()
     }
     
@@ -184,102 +192,91 @@ class FilterViewController: UIViewController {
     }
     
     @objc func applyUGradFilter() {
-        if let text = sportsClubNC.titleLabel?.text {
-            changeColor(button: sportsClubNC)
-            applyFilter(name: text)
-        }
+        changeColor(button: religious)
+        applyFilter(filter: religious)
+        
     }
     
     @objc func applyGradFilter() {
-        if let text = sportsClubC.titleLabel?.text {
-            changeColor(button: sportsClubC)
-            applyFilter(name: text)
-        }
+        changeColor(button: honorary)
+        applyFilter(filter: honorary)
+        
     }
     
     @objc func applyMusicFilter() {
-        if let text = music.titleLabel?.text {
-            changeColor(button: music)
-            applyFilter(name: text)
-        }
+        changeColor(button: music)
+        applyFilter(filter: music)
+        
     }
     
     @objc func applyStudentGovFilter() {
-        if let text = studentgov.titleLabel?.text {
-            changeColor(button: studentgov)
-            applyFilter(name: text)
-        }
+        changeColor(button: studentgov)
+        applyFilter(filter: studentgov)
+        
     }
     
     @objc func applyPerformingFilter() {
-        if let text = performing.titleLabel?.text {
-            changeColor(button: performing)
-            applyFilter(name: text)
-        }
+        changeColor(button: performing)
+        applyFilter(filter: performing)
+        
     }
     
     @objc func applyProfessionalFilter() {
-        if let text = professional.titleLabel?.text {
-            changeColor(button: professional)
-            applyFilter(name: text)
-        }
+        changeColor(button: professional)
+        applyFilter(filter: professional)
+        
     }
     
     @objc func applyInternationalFilter() {
-        if let text = international.titleLabel?.text {
-            changeColor(button: international)
-            applyFilter(name: text)
-        }
+        changeColor(button: international)
+        applyFilter(filter: international)
+        
     }
     
     @objc func applyPublicServiceFilter() {
-        if let text = publicService.titleLabel?.text {
-            changeColor(button: publicService)
-            applyFilter(name: text)
-        }
+        changeColor(button: publicService)
+        applyFilter(filter: publicService)
+        
     }
     
     @objc func applyTheatreFilter() {
-        if let text = theatre.titleLabel?.text {
-            changeColor(button: theatre)
-            applyFilter(name: text)
-        }
+        changeColor(button: theatre)
+        applyFilter(filter: theatre)
+        
     }
     
     @objc func applyCulturalFilter() {
-        if let text = cultural.titleLabel?.text {
-            changeColor(button: cultural)
-            applyFilter(name: text)
-        }
+        changeColor(button: cultural)
+        applyFilter(filter: cultural)
+        
     }
     
     @objc func applyRecreationalFilter() {
-        if let text = recreational.titleLabel?.text {
-            changeColor(button: recreational)
-            applyFilter(name: text)
-        }
+        changeColor(button: recreational)
+        applyFilter(filter: recreational)
+        
     }
     
-    func applyFilter(name: String) {
-        delegate?.changeFilterName(to: name)
+    func applyFilter(filter: UIButton) {
+        delegate?.changeFilterName(to: filter)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            sportsClubNC.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: -10),
-            sportsClubNC.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100)
+            religious.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: -10),
+            religious.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100)
         ])
         NSLayoutConstraint.activate([
-            sportsClubC.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 10),
-            sportsClubC.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100)
+            honorary.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 10),
+            honorary.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100)
         ])
         NSLayoutConstraint.activate([
             music.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: -10),
-            music.topAnchor.constraint(equalTo: sportsClubNC.bottomAnchor, constant: 8)
+            music.topAnchor.constraint(equalTo: religious.bottomAnchor, constant: 8)
         ])
         NSLayoutConstraint.activate([
             studentgov.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 10),
-            studentgov.topAnchor.constraint(equalTo: sportsClubC.bottomAnchor, constant: 8)
+            studentgov.topAnchor.constraint(equalTo: honorary.bottomAnchor, constant: 8)
         ])
         NSLayoutConstraint.activate([
             performing.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: -10),
