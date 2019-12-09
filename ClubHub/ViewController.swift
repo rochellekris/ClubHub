@@ -139,9 +139,7 @@ class ViewController: UIViewController {
 
 
     @objc func goToPost() {
-        //MARK: TODO post view controller
-//        navigationController?.pushViewController(PostViewController(), animated: true)
-        
+        navigationController?.pushViewController(PostsViewController(), animated: true)
     }
     
     @objc func goToProfile() {

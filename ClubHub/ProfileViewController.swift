@@ -112,18 +112,20 @@ class ProfileViewController: UIViewController {
             NSLayoutConstraint.activate([
                 netIDText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding*2),
                 netIDText.topAnchor.constraint(equalTo: netIDLabel.bottomAnchor, constant: padding),
-                netIDText.bottomAnchor.constraint(equalTo: netIDLabel.bottomAnchor, constant: padding*5)
+                netIDText.bottomAnchor.constraint(equalTo: netIDLabel.bottomAnchor, constant: padding*5),
+                netIDText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding*2)
             ])
             
             NSLayoutConstraint.activate([
                 passLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding*2),
-                passLabel.topAnchor.constraint(equalTo: netIDLabel.bottomAnchor, constant: padding*3)
+                passLabel.topAnchor.constraint(equalTo: netIDLabel.bottomAnchor, constant: padding*6)
             ])
             
             NSLayoutConstraint.activate([
                 passText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding*2),
                 passText.topAnchor.constraint(equalTo: passLabel.bottomAnchor, constant: padding),
-                passText.bottomAnchor.constraint(equalTo: passLabel.bottomAnchor, constant: padding*5)
+                passText.bottomAnchor.constraint(equalTo: passLabel.bottomAnchor, constant: padding*5),
+                passText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding*2)
             ])
             
             
