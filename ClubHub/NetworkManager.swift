@@ -69,7 +69,7 @@ class NetworkManager {
         userDefaults.set(sessionData.update_token, forKey: Strings.update_token)
     }
     
-    static func register(name: String, email: String, password: String) {
+    static func register(name: String, email: String, password: String, completion: @escaping (Bool, String) -> Void) {
         let parameters: [String: Any] = [
             "name": name,
             "email": email,
@@ -83,12 +83,14 @@ class NetworkManager {
                 
                 if let sessionData = try? jsonDecoder.decode(SessionResponse.self, from: data) {
                     setUserDefaults(sessionData: sessionData)
+                    completion(true, "Successfully Registered")
                 }
                 else if let errorMessage = try? jsonDecoder.decode(Error.self, from: data) {
+                    completion(false, errorMessage.error)
                 }
                 
             case .failure(let error):
-                print(error.localizedDescription)
+                completion(false, error.localizedDescription)
             }
         }
     }
@@ -238,7 +240,7 @@ class NetworkManager {
         //TODO
     }
     
-    static func addFavoritePost(post_id: Int, completion: @escaping (User) -> Void) {
+    static func addFavoritePost(post_id: Int, completion: @escaping (Bool, String) -> Void) {
         getCurrentUserId { user_id in
             let parameters: [String: Any] = [
                 "post_id": post_id
@@ -249,14 +251,14 @@ class NetworkManager {
                     let jsonDecoder = JSONDecoder()
                     
                     if let userData = try? jsonDecoder.decode(UserResponse.self, from: data) {
-                        completion(userData.data)
+                        completion(true, "Success")
                     }
                     else if let errorMessage = try? jsonDecoder.decode(Error.self, from: data) {
-                        print(errorMessage.error)
+                        completion(false, errorMessage.error)
                     }
                     
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    completion(false, error.localizedDescription)
                 }
             }
         }

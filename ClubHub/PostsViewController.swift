@@ -143,7 +143,7 @@ class PostsViewController: UIViewController {
 }
 
 
-extension PostsViewController: UICollectionViewDataSource{
+extension PostsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         posts.count
     }
@@ -158,7 +158,7 @@ extension PostsViewController: UICollectionViewDataSource{
     }
 }
 
-extension PostsViewController: UICollectionViewDelegateFlowLayout{
+extension PostsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: (collectionView.frame.width)*0.4)
     }
@@ -169,6 +169,13 @@ extension PostsViewController: UISearchBarDelegate {
         if (searchBar.text == "Search posts") {
             searchBar.text = ""
         }
+    }
+}
+
+extension PostsViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        navigationController?.pushViewController(PostViewController(post: posts[indexPath.row]), animated: true)
     }
 }
 
