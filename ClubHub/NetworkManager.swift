@@ -83,10 +83,8 @@ class NetworkManager {
                 
                 if let sessionData = try? jsonDecoder.decode(SessionResponse.self, from: data) {
                     setUserDefaults(sessionData: sessionData)
-                    print("Successfully Registered")
                 }
                 else if let errorMessage = try? jsonDecoder.decode(Error.self, from: data) {
-                    print(errorMessage.error)
                 }
                 
             case .failure(let error):
@@ -95,12 +93,11 @@ class NetworkManager {
         }
     }
     
-    static func login(email: String, password: String) {
+    static func login(email: String, password: String, completion: @escaping (Bool, String) -> Void) {
         let parameters: [String: Any] = [
             "email": email,
             "password": password
         ]
-        
         Alamofire.request(url + loginEndpoint, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { response in
             switch response.result {
             case .success(let data):
@@ -108,15 +105,14 @@ class NetworkManager {
                 
                 if let sessionData = try? jsonDecoder.decode(SessionResponse.self, from: data) {
                     setUserDefaults(sessionData: sessionData)
-                    print("Successfully Logged In")
+                    completion(true, "Login Successful")
                 }
                 else if let errorMessage = try? jsonDecoder.decode(Error.self, from: data) {
-                    print(errorMessage.error)
+                    completion(false, errorMessage.error)
                 }
                 
-                
             case .failure(let error):
-                print(error.localizedDescription)
+                completion(false, error.localizedDescription)
             }
         }
     }

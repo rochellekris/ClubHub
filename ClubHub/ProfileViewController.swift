@@ -8,7 +8,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
+    
     var logoImage: UIImageView!
     
     var clubHubLabel: UILabel!
@@ -22,6 +22,7 @@ class ProfileViewController: UIViewController {
     
     let padding: CGFloat = 8
     
+
             override func viewDidLoad() {
                 super.viewDidLoad()
                 view.backgroundColor = .white
@@ -136,12 +137,22 @@ class ProfileViewController: UIViewController {
             ])
         }
 
-       @objc func dismissViewController() {
-            navigationController?.popViewController(animated: true)
-        }
+       
+    @objc func dismissViewController() {
+        navigationController?.popViewController(animated: true)
+    }
     
-
-        @objc func loginFunc(){
-        
+    
+    @objc func loginFunc() {
+        if let netid = netIDText.text, let password = passText.text {
+            NetworkManager.login(email: netid, password: password) { success, message in
+                if (success == true) {
+                    
+                }
+                else {
+                    
+                }
+            }
         }
+    }
 }
