@@ -13,8 +13,9 @@ class PostCollectionViewCell: UICollectionViewCell {
     
     var postTitle: UILabel! = UILabel()
     var postBody: UITextView! = UITextView()
-    var interestedUsers: UIButton! = UIButton()
     var authorLabel: UILabel! = UILabel()
+    var likeButton: UIButton = UIButton()
+    var post: Post?
     
     let padding: CGFloat = 5
     
@@ -25,7 +26,7 @@ class PostCollectionViewCell: UICollectionViewCell {
         addLabel(label: postTitle, fontSize: 22)
         addLabel(label: authorLabel, fontSize: 12)
         addTextView(textView: postBody)
-        addButton(button: interestedUsers)
+        addLikeButton()
         
         setupConstraints()
     }
@@ -38,10 +39,16 @@ class PostCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(label)
     }
     
-    func addButton(button: UIButton!) {
-        button.setTitleColor(.systemRed, for: .normal)
-        button.addTarget(self, action: #selector(showUsers), for: .touchUpInside)
-        contentView.addSubview(button)
+    func addLikeButton() {
+        likeButton.setTitle("Like", for: .normal)
+        likeButton.setTitleColor(.systemRed, for: .normal)
+        likeButton.addTarget(self, action: #selector(likePost), for: .touchUpInside)
+        likeButton.layer.borderWidth = 1
+        likeButton.layer.cornerRadius = 4
+        likeButton.layer.borderColor = UIColor.systemRed.cgColor
+        likeButton.titleLabel?.font = .systemFont(ofSize: 13)
+        likeButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        contentView.addSubview(likeButton)
     }
     
     func addTextView(textView: UITextView) {
@@ -54,12 +61,12 @@ class PostCollectionViewCell: UICollectionViewCell {
     
     func setupConstraints() {
         
-        interestedUsers.snp.makeConstraints { make in
+        likeButton.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(padding)
             make.trailing.equalTo(contentView.snp.trailing).offset(-padding)
         }
         postTitle.snp.makeConstraints { make in
-            make.top.equalTo(interestedUsers.snp.top)
+            make.top.equalTo(likeButton.snp.top)
             make.leading.equalTo(contentView.snp.leading).offset(padding)
         }
         authorLabel.snp.makeConstraints { make in
@@ -74,17 +81,27 @@ class PostCollectionViewCell: UICollectionViewCell {
 
     }
     
-    @objc func showUsers() {
-        
+    @objc func likePost() {
+        if let unwrappedPost = post {
+            NetworkManager.addFavoritePost(post_id: unwrappedPost.id) { success, message in
+                if (success == false) {
+                    
+                }
+                else {
+                    
+                }
+            }
+        }
     }
     
     func configure(for post: Post) {
+        self.post = post
         NetworkManager.getUser(user_id: post.author_id) { author in
-            self.authorLabel.text = "Posted by: \(author.name)"
+            self.authorLabel.text = "Posted by: \(author.email)"
         }
         postTitle.text = post.title
         postBody.text = post.body
-        interestedUsers.setTitle("\(post.interested_users.count)", for: .normal)
+        likeButton.setTitle("Like (\(post.interested_users.count) interested)", for: .normal)
     }
     
     required init?(coder: NSCoder) {
