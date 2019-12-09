@@ -85,10 +85,7 @@ class PostCollectionViewCell: UICollectionViewCell {
         if let unwrappedPost = post {
             NetworkManager.addFavoritePost(post_id: unwrappedPost.id) { success, message in
                 if (success == false) {
-                    
-                }
-                else {
-                    
+                    print(message)
                 }
             }
         }

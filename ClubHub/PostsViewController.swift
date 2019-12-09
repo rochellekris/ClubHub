@@ -174,7 +174,6 @@ extension PostsViewController: UISearchBarDelegate {
 
 extension PostsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         navigationController?.pushViewController(PostViewController(post: posts[indexPath.row]), animated: true)
     }
 }

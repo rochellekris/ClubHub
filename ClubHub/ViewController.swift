@@ -27,6 +27,8 @@ class ViewController: UIViewController {
     let padding: CGFloat = 8
     let headerHeight: CGFloat = 30
     
+    var filterSelected: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -105,11 +107,20 @@ class ViewController: UIViewController {
         ])
     }
     
-    func getClubs(parameters: [String: Any]) {
-        NetworkManager.getClubs(parameters: parameters) { clubs in
-            self.clubs = clubs
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
+    func getClubs() {
+        if let searchText = searchBar.text, !searchText.isEmpty || filterSelected != "" {
+            var parameters: [String: Any] = [
+                "search_query": searchText,
+            ]
+            if (filterSelected != "") {
+                parameters["category"] = filterSelected
+            }
+            print(parameters)
+            NetworkManager.getClubs(parameters: parameters) { clubs in
+                self.clubs = clubs
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
             }
         }
     }
@@ -158,14 +169,9 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     @objc func pushFilterViewController() {
-        if let searchText = searchBar.text, !searchText.isEmpty {
-            let parameters: [String: Any] = [
-                "search_query": searchText
-            ]
-            getClubs(parameters: parameters)
-            let viewController = FilterViewController()
-            navigationController?.pushViewController(viewController, animated: true)
-        }
+        let filterViewController = FilterViewController()
+        filterViewController.delegate = self
+        navigationController?.pushViewController(filterViewController, animated: true)
     }
 }
 
@@ -180,5 +186,20 @@ extension ViewController: UISearchBarDelegate {
         if (searchBar.text == "Search clubs") {
             searchBar.text = ""
         }
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if (searchText.count >= 3 || filterSelected != "") {
+            getClubs()
+        }
+    }
+}
+
+protocol ChangeFilterDelegate: class {
+    func changeFilterName(to newString: String)
+}
+
+extension ViewController: ChangeFilterDelegate {
+    func changeFilterName(to newString: String) {
+        filterSelected = newString
     }
 }
