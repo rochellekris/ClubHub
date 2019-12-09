@@ -24,7 +24,7 @@ class PostCollectionViewCell: UICollectionViewCell {
         contentView.backgroundColor = .white
         addLabel(label: postTitle, fontSize: 22)
         addLabel(label: authorLabel, fontSize: 12)
-        addTextView(text: postBody)
+        addTextView(textView: postBody)
         addButton(button: interestedUsers)
         
         setupConstraints()
@@ -44,25 +44,23 @@ class PostCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(button)
     }
     
-    func addTextView(text: UITextView) {
-        text.text = "Testasdasfasfasf"
-        text.textColor = .black
-        text.isEditable = false
-        text.isHidden = false
-        text.layer.borderColor = UIColor.systemGray.cgColor
-        text.layer.borderWidth = 1
-        contentView.addSubview(text)
+    func addTextView(textView: UITextView) {
+        textView.text = ""
+        textView.isEditable = false
+        textView.textAlignment = .left
+        textView.textColor = .black
+        contentView.addSubview(textView)
     }
     
     func setupConstraints() {
         
         interestedUsers.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(padding)
-            make.leading.equalTo(contentView.snp.leading).offset(padding)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-padding)
         }
         postTitle.snp.makeConstraints { make in
             make.top.equalTo(interestedUsers.snp.top)
-            make.leading.equalTo(interestedUsers.snp.trailing).offset(padding)
+            make.leading.equalTo(contentView.snp.leading).offset(padding)
         }
         authorLabel.snp.makeConstraints { make in
             make.top.equalTo(postTitle.snp.bottom)
@@ -70,7 +68,7 @@ class PostCollectionViewCell: UICollectionViewCell {
         }
         postBody.snp.makeConstraints { make in
             make.top.equalTo(authorLabel.snp.bottom)
-            make.leading.equalTo(authorLabel.snp.leading)
+            make.width.equalTo(contentView.snp.width)
             make.bottom.equalTo(contentView.snp.bottom).offset(-padding)
         }
 
@@ -81,10 +79,9 @@ class PostCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(for post: Post) {
-//        NetworkManager.getUser(user_id: post.author_id) { author in
-//            self.authorLabel.text = author.name
-//        }
-        authorLabel.text = "Posted by: author"
+        NetworkManager.getUser(user_id: post.author_id) { author in
+            self.authorLabel.text = "Posted by: \(author.name)"
+        }
         postTitle.text = post.title
         postBody.text = post.body
         interestedUsers.setTitle("\(post.interested_users.count)", for: .normal)

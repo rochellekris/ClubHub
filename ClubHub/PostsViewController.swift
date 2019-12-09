@@ -29,13 +29,21 @@ class PostsViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Posts"
         
-        let post1 = Post(id: 1, title: "Test Post Title", body: "Test Post Description", author_id: 1, interested_users: [])
-        posts = [post1, post1, post1]
+        getPosts()
         setupToolBar()
         setupSearchBar()
         setupFilterButton()
         setupCollectionView()
         setupConstraints()
+    }
+    
+    func getPosts() {
+        NetworkManager.getPosts(parameters: [:]) { posts in
+            self.posts = posts
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     func setupToolBar() {
@@ -64,7 +72,7 @@ class PostsViewController: UIViewController {
         filterButton.setTitle("Filter", for: .normal)
         filterButton.tintColor = .black
         filterButton.sizeToFit()
-        filterButton.addTarget(self, action: #selector(pushFilterViewController), for: .touchUpInside)
+        filterButton.addTarget(self, action: #selector(getQueriedPosts), for: .touchUpInside)
         filterButton.isHidden = false
         view.addSubview(filterButton)
     }
@@ -118,6 +126,20 @@ class PostsViewController: UIViewController {
     @objc func goToProfile() {
         navigationController?.pushViewController(ProfileViewController(), animated: true)
     }
+    
+    @objc func getQueriedPosts() {
+        if let searchText = searchBar.text {
+            let parameters: [String: Any] = [
+                "search_query": searchText
+            ]
+            NetworkManager.getPosts(parameters: parameters) { posts in
+                self.posts = posts
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+        }
+    }
 }
 
 
@@ -133,9 +155,6 @@ extension PostsViewController: UICollectionViewDataSource{
         cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 5
         return cell
-    }
-    
-    @objc func pushFilterViewController() {
     }
 }
 
