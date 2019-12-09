@@ -10,6 +10,7 @@
 		2CF8B3F9AB0C75E3C6F3D9C9 /* Pods_ClubHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552E75E538248A9BECE71C98 /* Pods_ClubHub.framework */; };
 		3ED006C904CDAFFE82D70477 /* Pods_ClubHub_ClubHubUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A9A659D48040C4C5CCCE32A /* Pods_ClubHub_ClubHubUITests.framework */; };
 		5014216D239DCF57008EC9CF /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014216C239DCF57008EC9CF /* PostViewController.swift */; };
+		5014216F239E1883008EC9CF /* ClubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014216E239E1883008EC9CF /* ClubViewController.swift */; };
 		5018F215239C921D00599B44 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018F214239C921D00599B44 /* Strings.swift */; };
 		5018F217239C9DA700599B44 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018F216239C9DA700599B44 /* Test.swift */; };
 		5018F219239CA66700599B44 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018F218239CA66700599B44 /* Error.swift */; };
@@ -55,6 +56,7 @@
 		2AAE2DD40B44256EE5553D68 /* Pods-ClubHubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClubHubTests.release.xcconfig"; path = "Target Support Files/Pods-ClubHubTests/Pods-ClubHubTests.release.xcconfig"; sourceTree = "<group>"; };
 		43DEE9626E7135D937AD64DA /* Pods_ClubHubTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ClubHubTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5014216C239DCF57008EC9CF /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		5014216E239E1883008EC9CF /* ClubViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubViewController.swift; sourceTree = "<group>"; };
 		5018F214239C921D00599B44 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		5018F216239C9DA700599B44 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		5018F218239CA66700599B44 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				EF51A2A42388449400D995C2 /* FilterViewController.swift */,
 				EFC08A1923847ACC003DF58D /* ViewController.swift */,
 				EF51A2A223878FC200D995C2 /* ClubCollectionViewCell.swift */,
+				5014216E239E1883008EC9CF /* ClubViewController.swift */,
 				EFC08A1E23847ADC003DF58D /* Assets.xcassets */,
 				EFC08A2023847ADC003DF58D /* LaunchScreen.storyboard */,
 				EFC08A2323847ADC003DF58D /* Info.plist */,
@@ -447,6 +450,7 @@
 				EFC08A1A23847ACC003DF58D /* ViewController.swift in Sources */,
 				FE9EF4BB239D7EFB005FE738 /* ProfileViewController.swift in Sources */,
 				503EF723239DAE230011C3F4 /* PostsViewController.swift in Sources */,
+				5014216F239E1883008EC9CF /* ClubViewController.swift in Sources */,
 				50F0F9382398A57A00219D97 /* User.swift in Sources */,
 				5014216D239DCF57008EC9CF /* PostViewController.swift in Sources */,
 				507D991A2398049300E1D542 /* Post.swift in Sources */,

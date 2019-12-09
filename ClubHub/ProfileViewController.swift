@@ -19,6 +19,7 @@ class ProfileViewController: UIViewController {
     var passText: UITextView!
     
     var loginButton: UIButton!
+    var registerButton: UIButton!
     
     let padding: CGFloat = 8
     
@@ -26,6 +27,8 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        setupToolBar()
         
         logoImage = UIImageView()
         logoImage.image = UIImage(named: "Cornell C")
@@ -59,7 +62,7 @@ class ProfileViewController: UIViewController {
         netIDText.layer.borderWidth = 1
         netIDText.translatesAutoresizingMaskIntoConstraints = false
         netIDText.autocorrectionType = .no
-        netIDText.autocorrectionType = .no
+        netIDText.autocapitalizationType = .none
         view.addSubview(netIDText)
         
         passLabel = UILabel()
@@ -86,32 +89,46 @@ class ProfileViewController: UIViewController {
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         loginButton.setTitle("Login", for: .normal)
         loginButton.setTitleColor(.white, for: .normal)
-        loginButton.backgroundColor = .red
+        loginButton.backgroundColor = .systemRed
         loginButton.addTarget(self, action: #selector(loginFunc), for: .touchUpInside)
         loginButton.isHidden = false
         view.addSubview(loginButton)
+        
+        registerButton = UIButton(type: UIButton.ButtonType.system)
+        registerButton.translatesAutoresizingMaskIntoConstraints = false
+        registerButton.setTitle("Register", for: .normal)
+        registerButton.setTitleColor(.white, for: .normal)
+        registerButton.backgroundColor = .systemRed
+        registerButton.addTarget(self, action: #selector(register), for: .touchUpInside)
+        registerButton.isHidden = false
+        view.addSubview(registerButton)
+        
+        NetworkManager.getCurrentUserId { success, message, user in
+            if(success) {
+                self.goHome()
+            }
+        }
         
         setupConstraints()
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            logoImage.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding*2),
-            logoImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: -30),
-            logoImage.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            logoImage.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding*5)
+            clubHubLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            clubHubLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 2),
+            clubHubLabel.bottomAnchor.constraint(equalTo: netIDLabel.topAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            clubHubLabel.topAnchor.constraint(equalTo: logoImage.topAnchor),
-            clubHubLabel.leadingAnchor.constraint(equalTo: logoImage.trailingAnchor, constant: 2),
-            clubHubLabel.bottomAnchor.constraint(equalTo: logoImage.bottomAnchor)
+            logoImage.topAnchor.constraint(equalTo: clubHubLabel.topAnchor),
+            logoImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 100),
+            logoImage.trailingAnchor.constraint(equalTo: clubHubLabel.leadingAnchor, constant: -2),
+            logoImage.bottomAnchor.constraint(equalTo: clubHubLabel.bottomAnchor)
         ])
-        
         
         NSLayoutConstraint.activate([
             netIDLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding*2),
-            netIDLabel.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -padding*2)
+            netIDLabel.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -padding*3)
         ])
         
         NSLayoutConstraint.activate([
@@ -139,11 +156,39 @@ class ProfileViewController: UIViewController {
             loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding*3),
             loginButton.topAnchor.constraint(equalTo: passText.bottomAnchor, constant: padding)
         ])
+        
+        NSLayoutConstraint.activate([
+            registerButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding*3),
+            registerButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding*3),
+            registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: padding)
+        ])
     }
     
+    func setupToolBar() {
+        //MARK: Toolbar
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let homeButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(goHome))
+        let postButton = UIBarButtonItem(title: "Post", style:.plain, target: self, action: #selector(goToPost))
+        let profileButton = UIBarButtonItem(title: "Profile", style: .plain, target: self, action: #selector(goToProfile))
+        toolbarItems = [homeButton, spacer, postButton, spacer, profileButton]
+
+        navigationController?.setToolbarHidden(false, animated: false)
+    }
     
     @objc func dismissViewController() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func goHome() {
+        navigationController?.pushViewController(ViewController(), animated: true)
+    }
+
+    @objc func goToPost() {
+        navigationController?.pushViewController(PostsViewController(), animated: true)
+    }
+    
+    @objc func goToProfile() {
+        navigationController?.pushViewController(ProfileViewController(), animated: true)
     }
     
     
@@ -152,6 +197,22 @@ class ProfileViewController: UIViewController {
             NetworkManager.login(email: netid + "@cornell.edu", password: password) { success, message in
                 if (success != true) {
                     print(message)
+                }
+                else {
+                    self.goHome()
+                }
+            }
+        }
+    }
+    
+    @objc func register() {
+        if let netid = netIDText.text, let password = passText.text {
+            NetworkManager.register(email: netid + "@cornell.edu", password: password) { success, message in
+                if (success != true) {
+                    print(message)
+                }
+                else {
+                    self.goHome()
                 }
             }
         }

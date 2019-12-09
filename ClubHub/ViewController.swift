@@ -187,6 +187,12 @@ extension ViewController: UICollectionViewDelegateFlowLayout{
     }
 }
 
+extension ViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        navigationController?.pushViewController(ClubViewController(club: clubs[indexPath.row]), animated: true)
+    }
+}
+
 extension ViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         if (searchBar.text == "Search clubs") {

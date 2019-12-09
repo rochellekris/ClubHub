@@ -69,9 +69,9 @@ class NetworkManager {
         userDefaults.set(sessionData.update_token, forKey: Strings.update_token)
     }
     
-    static func register(name: String, email: String, password: String, completion: @escaping (Bool, String) -> Void) {
+    static func register(email: String, password: String, completion: @escaping (Bool, String) -> Void) {
         let parameters: [String: Any] = [
-            "name": name,
+            "name": email,
             "email": email,
             "password": password
         ]
@@ -144,7 +144,7 @@ class NetworkManager {
         }
     }
     
-    static func getCurrentUserId(completion: @escaping (Int) -> Void) {
+    static func getCurrentUserId(completion: @escaping (Bool, String, Int) -> Void) {
         let bearerToken: String = userDefaults.string(forKey: Strings.session_token) ?? ""
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(bearerToken)"
@@ -156,14 +156,14 @@ class NetworkManager {
                 let jsonDecoder = JSONDecoder()
                 
                 if let userData = try? jsonDecoder.decode(UserResponse.self, from: data) {
-                    completion(userData.data.id)
+                    completion(true, "success", userData.data.id)
                 }
                 else if let errorMessage = try? jsonDecoder.decode(Error.self, from: data) {
-                    print(errorMessage.error)
+                    completion(false, errorMessage.error, -1)
                 }
                 
             case .failure(let error):
-                print(error.localizedDescription)
+                completion(false, error.localizedDescription, -1)
             }
         }
     }
@@ -207,8 +207,7 @@ class NetworkManager {
     }
     
     static func addFavoriteClub(club_id: Int, completion: @escaping (User) -> Void) {
-        getCurrentUserId { user_id in
-            print(user_id)
+        getCurrentUserId { success, message, user_id in
             let parameters: [String: Any] = [
                 "club_id": club_id
             ]
@@ -241,7 +240,7 @@ class NetworkManager {
     }
     
     static func addFavoritePost(post_id: Int, completion: @escaping (Bool, String) -> Void) {
-        getCurrentUserId { user_id in
+        getCurrentUserId { success, message, user_id in
             let parameters: [String: Any] = [
                 "post_id": post_id
             ]
@@ -284,7 +283,7 @@ class NetworkManager {
     }
     
     static func createPost(title: String, body: String, completion: @escaping (Post) -> Void) {
-        getCurrentUserId { user_id in
+        getCurrentUserId { success, message, user_id in
             let parameters: [String: Any] = [
                 "title": title,
                 "body": body,
