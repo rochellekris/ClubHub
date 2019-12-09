@@ -80,7 +80,6 @@ class ViewController: UIViewController {
         collectionView.delegate = self
 
         setupConstraints()
- 
     }
     
     func setupConstraints() {
@@ -114,17 +113,7 @@ class ViewController: UIViewController {
             }
         }
     }
-    
-//    if let searchText = searchBar.text, !searchText.isEmpty {
-//        let parameters: [String: Any] = [
-//            "search_query": searchText
-//        ]
-//        getClubs(parameters: parameters)
-//        let viewController = FilterViewController()
-//        navigationController?.pushViewController(viewController, animated: true)
-//    }
-    
-    
+
     @objc func goHome() {
         if (navigationController?.topViewController != self) {
             navigationController?.pushViewController(ViewController(), animated: true)

@@ -269,8 +269,7 @@ class NetworkManager {
                 let jsonDecoder = JSONDecoder()
                 
                 if let postsData = try? jsonDecoder.decode(PostsResponse.self, from: data) {
-                    let posts = postsData.data
-                    print(posts)
+                    completion(postsData.data)
                 }
                 else if let errorMessage = try? jsonDecoder.decode(Error.self, from: data) {
                     print(errorMessage.error)
