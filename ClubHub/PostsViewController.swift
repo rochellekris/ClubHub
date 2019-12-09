@@ -13,7 +13,7 @@ class PostsViewController: UIViewController {
     var posts = [Post]()
     
     var searchBar: UISearchBar!
-    var filterButton: UIButton!
+    var searchButton: UIButton!
     
     var collectionView: UICollectionView!
     
@@ -32,7 +32,7 @@ class PostsViewController: UIViewController {
         getPosts()
         setupToolBar()
         setupSearchBar()
-        setupFilterButton()
+        setupSearchButton()
         setupCollectionView()
         setupConstraints()
     }
@@ -67,14 +67,14 @@ class PostsViewController: UIViewController {
         view.addSubview(searchBar)
     }
     
-    func setupFilterButton() {
-        filterButton = UIButton(type: UIButton.ButtonType.system)
-        filterButton.setTitle("Filter", for: .normal)
-        filterButton.tintColor = .black
-        filterButton.sizeToFit()
-        filterButton.addTarget(self, action: #selector(getQueriedPosts), for: .touchUpInside)
-        filterButton.isHidden = false
-        view.addSubview(filterButton)
+    func setupSearchButton() {
+        searchButton = UIButton(type: UIButton.ButtonType.system)
+        searchButton.setTitle("Search", for: .normal)
+        searchButton.tintColor = .black
+        searchButton.sizeToFit()
+        searchButton.addTarget(self, action: #selector(getQueriedPosts), for: .touchUpInside)
+        searchButton.isHidden = false
+        view.addSubview(searchButton)
     }
     
     func setupCollectionView() {
@@ -93,7 +93,7 @@ class PostsViewController: UIViewController {
     }
     
     func setupConstraints() {
-        filterButton.snp.makeConstraints { make in
+        searchButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(padding)
             make.bottom.equalTo(searchBar.snp.bottom)
             make.leading.equalTo(view.snp.trailing).offset(-60)
@@ -104,7 +104,7 @@ class PostsViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(padding)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.top).offset(75)
             make.leading.equalTo(view.snp.leading).offset(padding)
-            make.trailing.equalTo(filterButton.snp.leading).offset(padding)
+            make.trailing.equalTo(searchButton.snp.leading).offset(padding)
         }
         
         collectionView.snp.makeConstraints { make in
