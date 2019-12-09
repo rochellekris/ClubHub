@@ -45,7 +45,7 @@ class FilterViewController: UIViewController {
             
             ugrad = UIButton()
             ugrad.backgroundColor = .white
-            ugrad.setTitle("Undergraduate Graduate", for: .normal)
+            ugrad.setTitle("Undergraduate", for: .normal)
             ugrad.setTitleColor(.black, for: .normal)
             ugrad.layer.borderColor = UIColor.black.cgColor
             ugrad.layer.borderWidth = 1
@@ -112,7 +112,7 @@ class FilterViewController: UIViewController {
                        international.translatesAutoresizingMaskIntoConstraints = false
                        international.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
                        view.addSubview(international)
-            
+
             publicService = UIButton()
                        publicService.backgroundColor = .white
                        publicService.setTitle("Public Service", for: .normal)
@@ -122,7 +122,7 @@ class FilterViewController: UIViewController {
                        publicService.translatesAutoresizingMaskIntoConstraints = false
                        publicService.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
                        view.addSubview(publicService)
-            
+
             theatre = UIButton()
                        theatre.backgroundColor = .white
                        theatre.setTitle("Theatre", for: .normal)
@@ -131,8 +131,8 @@ class FilterViewController: UIViewController {
                        theatre.layer.borderWidth = 1
                        theatre.translatesAutoresizingMaskIntoConstraints = false
                        theatre.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-                       view.addSubview(grad)
-            
+                       view.addSubview(theatre)
+
             cultural = UIButton()
                        cultural.backgroundColor = .white
                        cultural.setTitle("Cultural", for: .normal)
@@ -142,7 +142,7 @@ class FilterViewController: UIViewController {
                        cultural.translatesAutoresizingMaskIntoConstraints = false
                        cultural.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
                        view.addSubview(cultural)
-            
+
             recreational = UIButton()
                        recreational.backgroundColor = .white
                        recreational.setTitle("Recreational", for: .normal)
@@ -158,11 +158,11 @@ class FilterViewController: UIViewController {
         func setupConstraints() {
             NSLayoutConstraint.activate([
                 ugrad.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: -10),
-                ugrad.topAnchor.constraint(equalTo: view.topAnchor, constant: 50)
+                ugrad.topAnchor.constraint(equalTo: view.topAnchor, constant: 100)
             ])
             NSLayoutConstraint.activate([
                 grad.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 10),
-                grad.topAnchor.constraint(equalTo: view.topAnchor, constant: 50)
+                grad.topAnchor.constraint(equalTo: view.topAnchor, constant: 100)
             ])
             NSLayoutConstraint.activate([
                 music.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: -10),
